@@ -7,7 +7,8 @@ GO
 CREATE PROC spSalesOrderSearch (@CustomerID int)
 AS
 
-select soh.SalesOrderID, soh.OrderDate, soh.ShipDate, CONCAT(pp.firstname, ' ', pp.lastname) [Sales Person], 
+select 
+soh.SalesOrderID, soh.OrderDate, soh.ShipDate, CONCAT(pp.firstname, ' ', pp.lastname) [Sales Person], 
 		a.City, sp.Name [State], soh.TotalDue [Total Amount]
 from sales.Customer c
 inner join
@@ -15,7 +16,7 @@ sales.SalesOrderHeader soh
 on soh.CustomerID = c.CustomerID
 inner join
 Person.Person pp
-on pp.BusinessEntityID = soh.SalesPersonID
+on pp.BusinessEntityID = c.CustomerID
 inner join
 Person.[Address] a
 on a.AddressID = soh.ShipToAddressID
